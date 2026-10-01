@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Appbar } from "../components/Appbar";
 function Dashboard() {
 
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ function Dashboard() {
 
     useEffect(function () {
         getBalance();
-        getUsers();
+        // getUsers();
     }, []);
 
     useEffect(function () {
@@ -103,36 +103,30 @@ function Dashboard() {
     }
 
     return (
-        <div className="dashboard">
-
+       
+           <div className="min-h-screen bg-slate-100">
             {/* Navbar */}
 
-            <div className="navbar">
-
-                <h2>Payments App</h2>
-
-                <div className="user-section">
-                    <span>Hello, User</span>
-
-                    <button onClick={logout}>
-                        Logout
-                    </button>
-                </div>
-
-            </div>
+             <Appbar onLogout={logout} />
 
 
             {/* Main content */}
 
-            <div className="dashboard-content">
+         <div className="max-w-5xl mx-auto px-6 py-8">
 
-                <h3>
-                    Your Balance
-                    <span> ₹{balance.toFixed(2)}</span>
-                </h3>
+               <div className="bg-white rounded-xl shadow-sm p-5 mb-8">
+    <h3 className="text-lg font-bold text-slate-800">
+        Your Balance
+        <span className="ml-3 text-2xl text-green-600">
+            ₹{balance.toFixed(2)}
+        </span>
+    </h3>
+</div>
 
 
-                <h3>Users</h3>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">
+    Users
+</h3>
 
 
                 {/* Search */}
@@ -144,7 +138,7 @@ function Dashboard() {
                     onChange={function (e) {
                         setFilter(e.target.value);
                     }}
-                    className="search-input"
+                  className="w-full border border-slate-300 rounded-lg px-4 py-3 mb-5 outline-none focus:ring-2 focus:ring-green-500"
                 />
 
 
@@ -156,15 +150,15 @@ function Dashboard() {
 
                         return (
                             <div
-                                className="user-row"
+                                className="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm mb-3"
                                 key={user._id}
                             >
 
-                                <div className="user-info">
+                                <div className="flex items-center gap-3">
 
-                                    <div className="avatar">
-                                        {user.firstName[0]}
-                                    </div>
+                                  <div className="h-12 w-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-lg font-bold">
+    {user.firstName?.[0]?.toUpperCase()}
+</div>
 
                                     <div>
                                         <strong>
@@ -180,7 +174,7 @@ function Dashboard() {
 
 
                                 <button
-                                    className="send-button"
+                                    className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-lg transition-colors"
                                     onClick={function () {
                                         setSelectedUser(user);
                                     }}
@@ -201,17 +195,19 @@ function Dashboard() {
 
             {selectedUser && (
 
-                <div className="modal-overlay">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
 
-                    <div className="modal">
+                <div className="bg-white w-full max-w-md rounded-xl shadow-xl p-6">
 
-                        <h1>Send Money</h1>
+                  <h1 className="text-2xl font-bold text-center mb-6">
+    Send Money
+</h1>
 
 
-                        <div className="recipient">
+                   <div className="flex items-center gap-3 mb-6">
 
-                            <div className="big-avatar">
-                                {selectedUser.firstName[0]}
+                            <div className="h-12 w-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-lg font-bold">
+                                {selectedUser.firstName?.[0]?.toUpperCase()}
                             </div>
 
                             <h2>
